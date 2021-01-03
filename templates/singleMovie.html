@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% block content %}
+
+        <div class="ms_content_wrapper padder_top80" style="padding-top: 0 !important;">
+			<div class="ms_blog_single_wrapper">
+				<div class="row">
+					<div class="col-lg-9 col-md-9" style="min-width: 90%;">
+						<div class="ms_blog_single">
+							<div class="blog_single_img">
+								<iframe src="{{ film.URL }}" id="myFrame" style="border: 0; width: 100%; min-height: 500px; height: 100%" frameborder="0" allowfullscreen></iframe>
+							</div>
+							<div class="blog_single_content">
+								<h3 class="ms_blog_title">{{ film.Title }}</h3>
+								<div class="ms_post_meta">
+									<ul>
+										<li>Release : {{ film.Release }}</li>
+									</ul>
+								</div>
+								{% if film.Description %}
+								<blockquote style="width: 100% !important;">
+									{{ film.Description|safe }}
+								</blockquote>
+								{% endif %}
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>	
+    
+{% endblock content %}

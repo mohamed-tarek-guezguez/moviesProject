@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% block content %}
+
+<!-- <div class="ms-banner">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="ms_banner_img">
+                    <img src="{% static 'images/banner.png' %}" alt="" class="img-fluid">
+                </div>
+                <div class="ms_banner_text">
+                    <h1>This Month’s</h1>
+                    <h1 class="ms_color">Record Breaking Films !</h1>
+                    <p>Dream your moments, Until I Met You, Gimme Some Courage, Dark Alley, One More Of A Stranger, Endless<br> Things, The Heartbeat Stops, Walking Promises, Desired Games and many more...</p>
+                    <div class="ms_banner_btn">
+                    <a href="#" class="ms_btn">Watch Now</a>
+                    <a href="#" class="ms_btn">Weekly Top 15</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Films List Start -->
+<div class="ms_top_artist" style="margin-top: 50px !important;">
+    <div class="container-fluid">
+        <div class="row">
+
+            {% if films %}
+                {% for film in films %}
+                <div class="col-lg-2 col-md-6">
+                    <div class="ms_rcnt_box marger_bottom30">
+                        <div class="ms_rcnt_box_img">
+                        <img src="{{film.Image}}" alt="" class="img-fluid" style="min-height: 340px; max-height: 340px;">
+                        <a href="{% url 'prodDetail' slug=film.Slug %}">
+                            <div class="ms_main_overlay">
+                                <div class="ms_box_overlay"></div>
+                                <div class="ms_play_icon">
+                                <img src="{% static 'images/svg/play.svg' %}" alt="">
+                                </div>
+                            </div>
+                        </a>
+                        </div>
+                        <div class="ms_rcnt_box_text">
+                        <h3><a href="javascript:void(0)">{{ film.Title }}</a></h3>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert">
+                    <img src="{% static 'images/error.png' %}" alt="error" style="margin-right: 15px;"> No films found !
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>           
+
+<!-- Load more -->
+<div class="center" style="margin-top: 30px;">
+    {% if films.has_other_pages %}
+    <div class="pagination" id="p_manu_num" style="justify-content: center;">
+        {% if films.has_previous %}
+                <a href="?{% if query %}Category__contains={{ query }}&{% endif %}{% if tquery %}q={{ tquery }}&{% endif %}page={{ films.previous_page_number }}">
+                    <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                </a>
+        {% endif %}
+
+        {% for i in films.paginator.page_range %}
+            {% if films.number == i %}
+                <a class="pagination-current">{{ i }}</a>
+            {% elif films.number >= i|add:is_mobile_negative and films.number <= i|add:is_mobile %}
+                <a href="?{% if query %}Category__contains={{ query }}&{% endif %}{% if tquery %}q={{ tquery }}&{% endif %}page={{ i }}">{{ i }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if films.has_next %}
+                <a href="?{% if query %}Category__contains={{ query }}&{% endif %}{% if tquery %}q={{ tquery }}&{% endif %}page={{ films.next_page_number }}">
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                </a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<!---line--->
+<div class="ms_divider"></div>
+
+<!---Weekly Top 15--->
+<div class="ms_weekly_wrapper">
+    <div class="ms_weekly_inner">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ms_heading"><h1>weekly top 15</h1></div>
+            </div>
+
+            {% for topFilm in topFilms %}
+            <div class="col-lg-4 col-md-12 padding_right40">
+                <div class="ms_weekly_box">
+                    <div class="weekly_left">
+                        <span class="w_top_no">{{ forloop.counter }}</span>
+                        <div class="w_top_song">
+                            <a href="{% url 'prodDetail' slug=topFilm.Slug %}">
+                                <div class="w_tp_song_img">
+                                    <img src="{{topFilm.Image}}" alt="" class="img-fluid" style="min-height: 80px; max-height: 80px;">
+                                    <div class="ms_song_overlay"></div>
+                                    <div class="ms_play_icon">
+                                        <img src="{% static 'images/svg/play.svg' %}" alt="">
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="w_tp_song_name">
+                            <h3><a href="{% url 'prodDetail' slug=topFilm.Slug %}">{{ topFilm.Snippet }}</a></h3>
+                            <p>{{ topFilm.Release }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+<!----Blog Comment Form---->
+<div class="blog_comments_forms" style="margin: auto; width: 80%; box-shadow: 1px 1px 4px #3BC8E7; padding: 25px; margin-top: 50px;">
+    <h1>Leave A Comment</h1>
+
+    <form id="my_form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="display: none;">
+            {{ form.as_p }}
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="comment_input_wrapper">
+                    <input name="name" value="" type="text" class="cmnt_field" placeholder="Your Name" id="name" onkeyup="myNameFunction()" onmouseup="myNameFunction()">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="comment_input_wrapper">
+                    <input name="email" value="" type="email" class="cmnt_field" placeholder="Your Email" id="email" onkeyup="myEmailFunction()" onmouseup="myEmailFunction()">
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <div class="comment_input_wrapper">
+                    <textarea id="comment" name="comment" class="cmnt_field" placeholder="Your Comments" onkeyup="myMessageFunction()" onmouseup="myMessageFunction()"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <div class="comment-form-submit">
+                    <input name="submit" type="submit" id="comment-submit" class="submit ms_btn" value="Send">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

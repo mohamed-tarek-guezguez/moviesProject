@@ -1,0 +1,401 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Movies</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="Movies">
+    <meta name="keywords" content="">
+    <meta name="author" content="GuezGuez Med.Tarek">
+    <meta name="MobileOptimized" content="320">
+    <!--Start Style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pagination.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'js/plugins/swiper/css/swiper.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'js/plugins/nice_select/nice-select.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'js/plugins/player/volume.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'js/plugins/scroll/jquery.mCustomScrollbar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <!-- Favicon Link -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+
+    <style>
+        .banner {
+            display: none !important;
+        }  
+
+        #banner {
+            display: none !important;
+        }
+
+        .alert {
+            padding: 20px;
+            background-color: #f44336; /* Red */
+            color: white;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        body::-webkit-scrollbar {
+                width: 4px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #1e1e24;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: #3D79B8;
+        }
+        .pagination-current {
+            color: white !important;
+        }
+    </style>
+</head>
+
+<body>
+	<!----Loader Start---->
+	<div class="ms_loader">
+		<div class="wrap">
+		  <img src="{% static 'images/loader.gif' %}" alt="">
+		</div>
+	</div>
+    <!----Main Wrapper Start---->
+    <div class="ms_main_wrapper">
+        <!---Side Menu Start--->
+        <div class="ms_sidemenu_wrapper">
+            <div class="ms_nav_close">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </div>
+            <div class="ms_sidemenu_inner">
+                <div class="ms_logo_inner">
+                    <div class="ms_logo">
+                        <a href="{% url 'homePage' %}"><img src="{% static 'images/logo.png' %}" alt="" class="img-fluid"/></a>
+                    </div>
+                    <div class="ms_logo_open">
+                        <a href="{% url 'homePage' %}"><img src="{% static 'images/open_logo.png' %}" alt="" class="img-fluid"/></a>
+                    </div>
+                </div>
+                <div class="ms_nav_wrapper">
+                    <ul>
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Action');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Action
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Animation');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Animation
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Documentary');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Documentary
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Fantasy');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Fantasy
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Music');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Music
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Sci-Fi');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Sci-Fi
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Tv-Movie');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Tv Movie
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav_downloads">
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Adventure');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Adventure
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Comedy');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Comedy
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Drama');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Drama
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('History');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    History
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Mystery');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Mystery
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Science-Fiction');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Science Fiction
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('War');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    War
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav_downloads">
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Crime');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Crime
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Family');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Family
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Horror');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Horror
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Romance');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Romance
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Thriller');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Thriller
+                                </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="javascript:onclick=filtringCategory('Western');">
+                                <span class="nav_icon">
+                                    <span class="icon icon_albums"></span>
+                                </span>
+                                <span class="nav_text">
+                                    Western
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <form method="get" style="display: none;">
+            {{myCatFilter.form}}
+            <button id="btnClickCategoryForm" type="submit">Search</button>
+        </form>
+        <!---Main Content Start--->
+        <div class="ms_content_wrapper padder_top80">
+            <!---Header--->
+            <div class="ms_header">
+                <div class="ms_top_left">
+                    <div class="ms_top_search">
+                        <form method="get" action="/" id="searchForm" style="display: none;">
+                            <input type="text" name="q" id="id_Title__icontains">
+                            <button id="btnClickCategory" type="submit">Search</button>
+                        </form>
+
+                        <input type="text" class="form-control" placeholder="Search..." id="searchInput" onkeyup="mySearchFunction()">
+                        <span class="search_icon" onclick="document.getElementById('searchForm').submit();">
+							<img src="{% static 'images/svg/search.svg' %}" alt="" onclick="document.getElementById('searchForm').submit();">
+						</span>
+                    </div>
+                    <div class="ms_top_trend">
+                        <span><a href="javascript:void(0)"  class="ms_color">This Month’s</a></span> <span class="top_marquee"><a href="javascript:void(0)">Record Breaking Films !</a></span>
+                    </div>
+                </div>
+                <div class="ms_top_right">
+                    <div class="ms_top_btn">
+                        <a href="javascript:;" class="ms_btn reg_btn" data-toggle="modal" data-target="#myModal"><span>register</span></a>
+                        <a href="javascript:;" class="ms_btn login_btn" data-toggle="modal" data-target="#myModal1"><span>login</span></a>
+                    </div>
+                </div>
+            </div>
+
+{% block content %}
+{% endblock %}
+
+    </div>
+
+    <!----Copyright---->
+    <div class="col-lg-12">
+        <div class="ms_copyright">
+            <div class="footer_border"></div>
+            <p><a target="_blank" href="https://www.facebook.com/tarak.guezguez">© 2020 Copyright : GuezGuez Med.Tarek</a></p>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        function myNameFunction() {
+            document.getElementById("id_Name").value = document.getElementById("name").value;
+        }
+
+        function myEmailFunction() {
+            document.getElementById("id_Email").value = document.getElementById("email").value;
+        }
+
+        function myMessageFunction() {
+            document.getElementById("id_Message").value = document.getElementById("comment").value;
+        }
+
+        function mySearchFunction() {
+            document.getElementById("id_Title__icontains").value = document.getElementById("searchInput").value;
+        }
+
+        var inputSearch = document.getElementById("searchInput");
+        inputSearch.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                var btnClick = document.getElementById("btnClickCategory");
+                btnClick.click();
+            }
+        });
+
+        function filtringCategory(x) {
+            document.getElementById("id_Genre__contains").value = x;
+            var btnClick = document.getElementById("btnClickCategoryForm");
+            btnClick.click();
+        }
+    </script>
+
+    <!--Main js file Style-->
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/swiper/js/swiper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/player/jplayer.playlist.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/player/jquery.jplayer.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/player/audio-player.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/player/volume.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/nice_select/jquery.nice-select.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/scroll/jquery.mCustomScrollbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>
